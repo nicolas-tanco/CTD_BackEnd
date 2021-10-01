@@ -26,7 +26,7 @@ public class PacienteController {
     }
 
     @PostMapping("/nuevo")
-    public ResponseEntity<PacienteDto> crearNuevoPaciente(@RequestBody PacienteDto paciente) throws InvalidInputException {
+    public ResponseEntity<PacienteDto> crearNuevoPaciente(@RequestBody PacienteDto paciente) throws InvalidInputException, NotFoundException {
         return ResponseEntity.ok(pacienteService.guardar(paciente));
     }
 

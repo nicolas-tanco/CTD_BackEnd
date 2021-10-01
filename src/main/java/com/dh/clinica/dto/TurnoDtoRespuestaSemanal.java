@@ -21,7 +21,7 @@ public class TurnoDtoRespuestaSemanal {
 
     public TurnoDtoRespuestaSemanal(){}
 
-    public TurnoDtoRespuestaSemanal(TurnoDto t){
+    public TurnoDtoRespuestaSemanal(Turno t){
         dia = t.getFecha().getDayOfMonth();
         hora = t.getFecha().getHour();
         odontologoApellido = t.getOdontologo().getApellido();

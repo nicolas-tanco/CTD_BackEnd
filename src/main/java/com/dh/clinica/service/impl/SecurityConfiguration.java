@@ -30,8 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/turnos/buscarid/**").hasAnyAuthority(AppUserRole.USER.name())
-                .antMatchers("/turnos/**","/pacientes/**","/turnos/**","/h2-console/**").hasAnyAuthority(AppUserRole.ADMIN.name())
+                .antMatchers("/turnos/buscarid/**").hasAnyAuthority(AppUserRole.USER.name(),AppUserRole.ADMIN.name())
+                .antMatchers("/turnos/**","/pacientes/**","/h2-console/**").hasAnyAuthority(AppUserRole.ADMIN.name())
                 .anyRequest().authenticated()
                 .and().formLogin().permitAll()
                 .and().logout().permitAll();

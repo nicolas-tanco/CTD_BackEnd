@@ -14,5 +14,6 @@ public interface TurnoRepository extends JpaRepository<Turno, Integer> {
     Optional<Turno> buscarPorHorarioOdontologo(Integer id, LocalDateTime fecha);
     @Query("SELECT t FROM Turno t WHERE t.paciente.id=?1 AND t.fecha=?2")
     Optional<Turno> buscarPorHorarioPaciente(Integer id, LocalDateTime fecha);
-
+    @Query("SELECT t FROM Turno t WHERE t.fecha < ?1")
+    Optional<List<Turno>>semanales(LocalDateTime fecha);
 }

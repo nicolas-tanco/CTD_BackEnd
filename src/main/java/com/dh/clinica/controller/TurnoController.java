@@ -2,6 +2,8 @@ package com.dh.clinica.controller;
 
 import com.dh.clinica.config.SpringConfig;
 import com.dh.clinica.dto.TurnoDto;
+import com.dh.clinica.exceptions.InvalidInputException;
+import com.dh.clinica.exceptions.NotFoundException;
 import com.dh.clinica.persistence.entities.Odontologo;
 import com.dh.clinica.persistence.entities.Paciente;
 import com.dh.clinica.persistence.entities.Turno;
@@ -35,18 +37,28 @@ public class TurnoController {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<?> crear(@RequestBody TurnoDto t){
-        turnoService.guardar(t);
-        return ResponseEntity.ok(t);
+    public ResponseEntity<?> crear(@RequestBody TurnoDto t) throws InvalidInputException, NotFoundException {
+
+        return ResponseEntity.ok( turnoService.guardar(t));
     }
 
     @GetMapping("/semana")
-    public ResponseEntity<?> turnosSemanales(){
-        return ResponseEntity.ok(turnoService.buscarTurnosProximaSemana());
+    public ResponseEntity<?> turnosSemanales1(){
+        return ResponseEntity.ok(turnoService.semanales());
     }
 
     @GetMapping("/buscarid/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable Integer id){
+    public ResponseEntity<?> buscarPorId(@PathVariable Integer id) throws NotFoundException {
         return ResponseEntity.ok(turnoService.buscar(id));
     }
+    @PutMapping("/actualizar")
+    public ResponseEntity<?> actualizar(@RequestBody TurnoDto t) throws InvalidInputException, NotFoundException {
+        return ResponseEntity.ok(turnoService.guardar(t));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) throws NotFoundException {
+        return ResponseEntity.ok(turnoService.eliminar(id));
+    }
+
 }

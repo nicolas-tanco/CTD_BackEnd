@@ -31,7 +31,7 @@ public class OdontologoController {
     }
 
     @PostMapping("/nuevo")
-    public ResponseEntity<OdontologoDto> crear(@RequestBody OdontologoDto o) throws InvalidInputException {
+    public ResponseEntity<OdontologoDto> crear(@RequestBody OdontologoDto o) throws InvalidInputException, NotFoundException {
         return ResponseEntity.ok(service.guardar(o));
     }
 
