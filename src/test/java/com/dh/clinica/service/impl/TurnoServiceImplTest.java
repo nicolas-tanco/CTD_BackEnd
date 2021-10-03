@@ -35,49 +35,41 @@ class TurnoServiceImplTest {
 
     @BeforeEach
     void setup() throws InvalidInputException {
-        odontologo.setId(1);
-        paciente.setId(1);
         paciente.setDomicilio(domicilio);
+        turno.setFecha(LocalDateTime.now());
+        paciente = servicePaciente.guardar(paciente);
+        odontologo = serviceOdontologo.guardar(odontologo);
         turno.setOdontologo(odontologo);
         turno.setPaciente(paciente);
-        turno.setFecha(LocalDateTime.now());
-        servicePaciente.guardar(paciente);
-        serviceOdontologo.guardar(odontologo);
 
     }
 
     @Test
     void test1_guardar() throws Exception{
 
-        serviceTurno.guardar(turno);
+        turno = serviceTurno.guardar(turno);
         assertTrue(!serviceTurno.buscarTodos().isEmpty());
-        serviceTurno.eliminar(serviceTurno.buscarTodos().get(0).getId());
+        serviceTurno.eliminar(turno.getId());
 
     }
 
     @Test
     void test2_eliminar()throws NotFoundException, InvalidInputException {
 
-
-        serviceTurno.guardar(turno);
-        serviceTurno.eliminar(serviceTurno.buscarTodos().get(0).getId());
-
-        assertTrue(serviceTurno.buscarTodos().isEmpty());
+        turno = serviceTurno.guardar(turno);
+        assertNotNull(serviceTurno.eliminar(turno.getId()));
     }
 
     @Test
     void test3_actualizar_error() throws NotFoundException {
 
-
-
        try {
-           serviceTurno.guardar(turno);
-           turno.setId(serviceTurno.buscarTodos().get(0).getId());
+           turno = serviceTurno.guardar(turno);
            serviceTurno.actualizar(turno);
        }catch (Exception ex){
            assertTrue(ex.getMessage().equals("Horario ocupado"));
        }
-        serviceTurno.eliminar(serviceTurno.buscarTodos().get(0).getId());
+        serviceTurno.eliminar(turno.getId());
 
     }
 
@@ -85,10 +77,11 @@ class TurnoServiceImplTest {
 
     @Test
     void semanales() throws InvalidInputException, NotFoundException {
+
         turno.setFecha(LocalDateTime.now().plusDays(4));
-        serviceTurno.guardar(turno);
+        turno = serviceTurno.guardar(turno);
         FechaDto fechaDto = new FechaDto(LocalDateTime.now().getDayOfMonth(),LocalDateTime.now().getMonthValue(),LocalDateTime.now().getYear());
-        assertTrue(!serviceTurno.semanales(fechaDto).isEmpty());
-        serviceTurno.eliminar(serviceTurno.buscarTodos().get(0).getId());
+        assertFalse(serviceTurno.semanales(fechaDto).isEmpty());
+        serviceTurno.eliminar(turno.getId());
     }
 }

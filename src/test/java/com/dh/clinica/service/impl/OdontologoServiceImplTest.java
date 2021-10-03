@@ -27,45 +27,45 @@ class OdontologoServiceImplTest {
 
     @Test
     void buscar() throws InvalidInputException, NotFoundException {
-        service.guardar(od);
-        assertNotNull(service.buscar(1));
+        assertNotNull(service.guardar(od).getId());
         service.eliminar(service.buscarTodos().get(0).getId());
     }
 
     @Test
     public void eliminarTest() throws InvalidInputException, NotFoundException {
-        service.guardar(od);
-        service.eliminar(service.buscarTodos().get(0).getId());
+        service.eliminar(service.guardar(od).getId());
         assertTrue(service.buscarTodos().isEmpty());
     }
 
+
     @Test
     void guardar() throws InvalidInputException, NotFoundException {
-        service.guardar(od);
+        od.setId(service.guardar(od).getId());
         assertFalse(service.buscarTodos().isEmpty());
-        service.eliminar(service.buscarTodos().get(0).getId());
+        service.eliminar(od.getId());
     }
 
 
     @Test
-    void buscarError() {
+    void buscarError() throws InvalidInputException, NotFoundException {
 
         try{
-            service.guardar(od);
-            service.buscar(1);
-            service.eliminar(service.buscarTodos().get(0).getId());
+            od.setId(service.guardar(od).getId());
+            service.buscar( od.getId()+1);
         }catch (Exception ex){
             assertTrue(ex.getMessage().equals("El id no existe."));
         }
+        service.eliminar(od.getId());
     }
 
 
 
     @Test
     void z_actualizar() throws InvalidInputException, NotFoundException {
-        service.guardar(od);
-        assertNotNull(service.actualizar(service.buscarTodos().get(0)));
-        service.eliminar(service.buscarTodos().get(0).getId());
+        od.setId(service.guardar(od).getId());
+        od.setApellido("Tanco");
+        assertEquals("Tanco",service.actualizar(od).getApellido());
+        service.eliminar(od.getId());
     }
 
 }

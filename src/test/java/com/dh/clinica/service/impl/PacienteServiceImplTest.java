@@ -29,34 +29,33 @@ class PacienteServiceImplTest {
 
     @Test
     void guardar() throws Exception{
-        service.guardar(paciente);
+        paciente = service.guardar(paciente);
         assertFalse(service.buscarTodos().isEmpty());
-        service.eliminar(service.buscarTodos().get(0).getId());
+        service.eliminar(paciente.getId());
     }
 
     @Test
     void buscar() throws InvalidInputException, NotFoundException {
-        service.guardar(paciente);
-        assertNotNull(service.buscar(1));
-        service.eliminar(service.buscarTodos().get(0).getId());
+        paciente = service.guardar(paciente);
+        assertNotNull(service.buscar(paciente.getId()));
+        service.eliminar(paciente.getId());
     }
 
 
     @Test
     void z_actualizar() throws Exception{
-        service.guardar(paciente);
+        paciente = service.guardar(paciente);
         paciente.setDni("333");
-        paciente.setId(service.buscarTodos().get(0).getId());
         service.actualizar(paciente);
-        assertTrue(service.buscarTodos().get(0).getDni().equals("333"));
-        service.eliminar(service.buscarTodos().get(0).getId());
-        paciente.setId(null);
+        assertTrue(service.buscar(paciente.getId()).getDni().equals("333"));
+        service.eliminar(paciente.getId());
+
     }
 
     @Test
     void eliminar() throws Exception{
-        service.guardar(paciente);
-        service.eliminar(service.buscarTodos().get(0).getId());
+
+        service.eliminar(service.guardar(paciente).getId());
         assertTrue(service.buscarTodos().isEmpty());
     }
 }
