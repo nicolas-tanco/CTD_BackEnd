@@ -35,7 +35,7 @@ public class OdontologoServiceImpl implements OdontologoService {
             throw new InvalidInputException("El id no puede ser null");
        Optional<Odontologo> o = repository.findById(id);
         if(o.isEmpty())
-            throw new NotFoundException("El id "+id+" no existe.");
+            throw new NotFoundException("El id no existe.");
         return new OdontologoDto(o.get());
     }
 

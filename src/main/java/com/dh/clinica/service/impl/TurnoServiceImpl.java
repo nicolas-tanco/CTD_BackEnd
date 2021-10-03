@@ -1,6 +1,7 @@
 package com.dh.clinica.service.impl;
 
 import com.dh.clinica.config.SpringConfig;
+import com.dh.clinica.dto.FechaDto;
 import com.dh.clinica.dto.TurnoDto;
 import com.dh.clinica.dto.TurnoDtoRespuestaSemanal;
 import com.dh.clinica.exceptions.InvalidInputException;
@@ -92,9 +93,10 @@ public class TurnoServiceImpl implements TurnoService {
     }
 
     @Override
-    public List<TurnoDtoRespuestaSemanal> semanales(){
+    public List<TurnoDtoRespuestaSemanal> semanales(FechaDto fechaDto){
+        LocalDateTime f = LocalDateTime.of(fechaDto.getAnio(),fechaDto.getMes(), fechaDto.getDia(),0,0 );
         List<TurnoDtoRespuestaSemanal> t1 = new ArrayList<>();
-        for (Turno t  : repository.semanales(LocalDateTime.now().plusDays(7)).get() ) {
+        for (Turno t  : repository.semanales(f,f.plusDays(7))) {
             t1.add(new TurnoDtoRespuestaSemanal(t));
         }
         return t1;
@@ -108,7 +110,6 @@ public class TurnoServiceImpl implements TurnoService {
         pacienteService.buscar(id);
         return repository.buscarPorHorarioPaciente(id, fecha).isPresent();
     }
-
 
 
 

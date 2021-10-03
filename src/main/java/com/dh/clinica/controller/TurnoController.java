@@ -1,6 +1,7 @@
 package com.dh.clinica.controller;
 
 import com.dh.clinica.config.SpringConfig;
+import com.dh.clinica.dto.FechaDto;
 import com.dh.clinica.dto.TurnoDto;
 import com.dh.clinica.exceptions.InvalidInputException;
 import com.dh.clinica.exceptions.NotFoundException;
@@ -43,8 +44,8 @@ public class TurnoController {
     }
 
     @GetMapping("/semana")
-    public ResponseEntity<?> turnosSemanales1(){
-        return ResponseEntity.ok(turnoService.semanales());
+    public ResponseEntity<?> turnosSemanales1(@RequestBody FechaDto f){
+        return ResponseEntity.ok(turnoService.semanales(f));
     }
 
     @GetMapping("/buscarid/{id}")
