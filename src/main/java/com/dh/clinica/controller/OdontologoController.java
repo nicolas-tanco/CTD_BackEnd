@@ -37,9 +37,13 @@ public class OdontologoController {
 
     @PutMapping("/actualizar")
     public ResponseEntity<OdontologoDto> actualizar(@RequestBody OdontologoDto o) throws InvalidInputException, NotFoundException {
-        if(service.buscar(o.getId()) != null)
-            return ResponseEntity.ok(service.guardar(o));
-        else
-            return ResponseEntity.badRequest().body(o);
+
+            return ResponseEntity.ok(service.actualizar(o));
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) throws InvalidInputException, NotFoundException {
+        return ResponseEntity.ok(service.eliminar(id));
     }
 }

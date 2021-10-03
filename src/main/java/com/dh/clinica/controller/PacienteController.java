@@ -49,4 +49,9 @@ public class PacienteController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) throws InvalidInputException, NotFoundException {
+        return ResponseEntity.ok(pacienteService.eliminar(id));
+    }
+
 }
