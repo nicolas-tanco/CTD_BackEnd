@@ -33,8 +33,10 @@ class OdontologoServiceImplTest {
 
     @Test
     public void eliminarTest() throws InvalidInputException, NotFoundException {
+        Integer size1 = service.buscarTodos().size();
         service.eliminar(service.guardar(od).getId());
-        assertTrue(service.buscarTodos().isEmpty());
+        Integer size2 = service.buscarTodos().size();
+        assertEquals(size1,size2);
     }
 
 
